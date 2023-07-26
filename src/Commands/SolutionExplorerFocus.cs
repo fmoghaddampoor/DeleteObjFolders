@@ -1,4 +1,5 @@
-﻿namespace CloseAllTabs
+﻿// ReSharper disable All
+namespace CloseAllTabs.Commands
 {
     using EnvDTE;
     using EnvDTE80;
@@ -6,13 +7,13 @@
 
     public class SolutionExplorerFocus
     {
-        private readonly DTE2 _dte;
-        private readonly Options _options;
+        private readonly DTE2 dte;
+        private readonly Options options;
 
         private SolutionExplorerFocus(DTE2 dte, Options options)
         {
-            this._dte = dte;
-            this._options = options;
+            this.dte = dte;
+            this.options = options;
 
             SolutionEvents.OnBeforeCloseSolution += (s, e) => this.Execute();
         }
@@ -26,12 +27,12 @@
 
         private void Execute()
         {
-            if (!this._options.FocusSolutionExplorer)
+            if (!this.options.FocusSolutionExplorer)
             {
                 return;
             }
 
-            var solExp = this._dte.Windows.Item(Constants.vsWindowKindSolutionExplorer);
+            var solExp = this.dte.Windows.Item(Constants.vsWindowKindSolutionExplorer);
 
             if (solExp != null)
             {

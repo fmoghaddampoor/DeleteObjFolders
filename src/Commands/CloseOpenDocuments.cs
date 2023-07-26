@@ -1,4 +1,5 @@
-﻿namespace CloseAllTabs
+﻿// ReSharper disable All
+namespace CloseAllTabs.Commands
 {
     using System;
     using EnvDTE;
@@ -10,15 +11,15 @@
 
     public class CloseOpenDocuments
     {
-        private readonly IServiceProvider _serviceProvider;
-        private readonly DTE2 _dte;
-        private readonly Options _options;
+        private readonly IServiceProvider serviceProvider;
+        private readonly DTE2 dte;
+        private readonly Options options;
 
         private CloseOpenDocuments(IServiceProvider serviceProvider, DTE2 dte, Options options)
         {
-            this._serviceProvider = serviceProvider;
-            this._dte = dte;
-            this._options = options;
+            this.serviceProvider = serviceProvider;
+            this.dte = dte;
+            this.options = options;
         }
 
         public static CloseOpenDocuments Instance { get; private set; }
@@ -33,18 +34,18 @@
 
         private void Execute()
         {
-            if (!this._options.CloseDocuments)
+            if (!this.options.CloseDocuments)
             {
                 return;
             }
 
-            foreach (Document document in this._dte.Documents)
+            foreach (Document document in this.dte.Documents)
             {
                 var filePath = document.FullName;
 
                 // Don't close pinned files
                 if (VsShellUtilities.IsDocumentOpen(
-                        this._serviceProvider, filePath, VSConstants.LOGVIEWID_Primary, out var hierarchy, out var itemId,
+                        this.serviceProvider, filePath, VSConstants.LOGVIEWID_Primary, out _, out _,
                         out var frame))
                 {
                     ErrorHandler.ThrowOnFailure(frame.GetProperty((int)__VSFPROPID5.VSFPROPID_IsPinned, out var propVal));

@@ -1,4 +1,4 @@
-﻿namespace CloseAllTabs
+﻿namespace CloseAllTabs.Commands
 {
     using System;
     using System.Diagnostics;
@@ -10,8 +10,8 @@
     {
         private DeleteBinFolder(DTE2 dte, Options options)
         {
-            this._dte = dte;
-            this._options = options;
+            this.Dte = dte;
+            this.Options = options;
 
             SolutionEvents.OnBeforeCloseSolution += (s, e) => this.Execute();
         }
@@ -25,7 +25,7 @@
 
         private void Execute()
         {
-            if (!this._options.DeleteBinFolder)
+            if (!this.Options.DeleteBinFolder)
             {
                 return;
             }

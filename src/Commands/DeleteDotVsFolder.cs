@@ -1,4 +1,5 @@
-﻿namespace CloseAllTabs
+﻿// ReSharper disable All
+namespace CloseAllTabs.Commands
 {
     using System;
     using System.Diagnostics;
@@ -10,8 +11,8 @@
     {
         private DeleteDotVsFolder(DTE2 dte, Options options)
         {
-            this._dte = dte;
-            this._options = options;
+            this.Dte = dte;
+            this.Options = options;
 
             SolutionEvents.OnBeforeCloseSolution += (s, e) => this.Execute();
         }
@@ -25,14 +26,14 @@
 
         private void Execute()
         {
-            if (!this._options.DeleteDotVsFolder)
+            if (!this.Options.DeleteDotVsFolder)
             {
                 return;
             }
 
             try
             {
-                var root = GetSolutionRootFolder(this._dte.Solution);
+                var root = GetSolutionRootFolder(this.Dte.Solution);
                 var dotVs = Path.Combine(root, ".vs");
                 this.DeleteFiles(dotVs);
             }

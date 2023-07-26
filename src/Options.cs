@@ -35,13 +35,13 @@
         [DisplayName("Delete Logs folder")]
         [Description("Deletes the Logs folders of IIS Express")]
         [DefaultValue(false)]
-        public bool DeleteIISExpressLogsFolder { get; set; }
+        public bool DeleteIisExpressLogsFolder { get; set; }
 
         [Category("IIS Express")]
         [DisplayName("Delete TraceLogFiles folder")]
         [Description("Deletes the TraceLogFiles folders of IIS Express")]
         [DefaultValue(false)]
-        public bool DeleteIISExpressTraceLogFilesFolder { get; set; }
+        public bool DeleteIisExpressTraceLogFilesFolder { get; set; }
 
         // Solution Explorer
         [Category("Solution Explorer")]

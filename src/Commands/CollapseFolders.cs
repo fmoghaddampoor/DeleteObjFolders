@@ -1,4 +1,5 @@
-﻿namespace CloseAllTabs
+﻿// ReSharper disable All
+namespace CloseAllTabs.Commands
 {
     using System.Linq;
     using EnvDTE;
@@ -7,13 +8,13 @@
 
     public class CollapseFolders
     {
-        private readonly DTE2 _dte;
-        private readonly Options _options;
+        private readonly DTE2 dte;
+        private readonly Options options;
 
         private CollapseFolders(DTE2 dte, Options options)
         {
-            this._dte = dte;
-            this._options = options;
+            this.dte = dte;
+            this.options = options;
 
             SolutionEvents.OnBeforeCloseSolution += (s, e) => this.Execute();
         }
@@ -27,21 +28,21 @@
 
         private void Execute()
         {
-            if (!this._options.CollapseOn)
+            if (!this.options.CollapseOn)
             {
                 return;
             }
 
-            var hierarchy = this._dte.ToolWindows.SolutionExplorer.UIHierarchyItems;
+            var hierarchy = this.dte.ToolWindows.SolutionExplorer.UIHierarchyItems;
 
             try
             {
-                this._dte.SuppressUI = true;
+                this.dte.SuppressUI = true;
                 this.CollapseHierarchy(hierarchy);
             }
             finally
             {
-                this._dte.SuppressUI = false;
+                this.dte.SuppressUI = false;
             }
         }
 
@@ -72,13 +73,13 @@
             }
 
             // Collapse solution folders if enabled in settings
-            if (project.Kind == ProjectKinds.vsProjectKindSolutionFolder && this._options.CollapseSolutionFolders)
+            if (project.Kind == ProjectKinds.vsProjectKindSolutionFolder && this.options.CollapseSolutionFolders)
             {
                 return true;
             }
 
             // Collapse projects if enabled in settings
-            if (project.Kind != ProjectKinds.vsProjectKindSolutionFolder && this._options.CollapseProjects)
+            if (project.Kind != ProjectKinds.vsProjectKindSolutionFolder && this.options.CollapseProjects)
             {
                 return true;
             }
