@@ -1,19 +1,20 @@
-﻿using EnvDTE;
-using EnvDTE80;
-
-namespace CloseAllTabs
+﻿namespace CloseAllTabs
 {
+    using EnvDTE;
+    using EnvDTE80;
+    using SolutionEvents = Microsoft.VisualStudio.Shell.Events.SolutionEvents;
+
     public class SolutionExplorerFocus
     {
-        private DTE2 _dte;
-        private Options _options;
+        private readonly DTE2 _dte;
+        private readonly Options _options;
 
         private SolutionExplorerFocus(DTE2 dte, Options options)
         {
-            _dte = dte;
-            _options = options;
+            this._dte = dte;
+            this._options = options;
 
-            Microsoft.VisualStudio.Shell.Events.SolutionEvents.OnBeforeCloseSolution += (s, e) => Execute();
+            SolutionEvents.OnBeforeCloseSolution += (s, e) => this.Execute();
         }
 
         public static SolutionExplorerFocus Instance { get; private set; }
@@ -25,10 +26,12 @@ namespace CloseAllTabs
 
         private void Execute()
         {
-            if (!_options.FocusSolutionExplorer)
+            if (!this._options.FocusSolutionExplorer)
+            {
                 return;
+            }
 
-            Window solExp = _dte.Windows.Item(Constants.vsWindowKindSolutionExplorer);
+            var solExp = this._dte.Windows.Item(Constants.vsWindowKindSolutionExplorer);
 
             if (solExp != null)
             {

@@ -1,21 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices;
-using EnvDTE;
-using EnvDTE80;
-
-namespace CloseAllTabs
+﻿namespace CloseAllTabs
 {
+    using System;
+    using System.Diagnostics;
+    using System.IO;
+    using EnvDTE80;
+    using Microsoft.VisualStudio.Shell.Events;
+
     public class DeleteTestResultsFolder : DeleteBase
     {
         private DeleteTestResultsFolder(DTE2 dte, Options options)
         {
-            _dte = dte;
-            _options = options;
+            this._dte = dte;
+            this._options = options;
 
-            Microsoft.VisualStudio.Shell.Events.SolutionEvents.OnBeforeCloseSolution += (s, e) => Execute();
+            SolutionEvents.OnBeforeCloseSolution += (s, e) => this.Execute();
         }
 
         public static DeleteTestResultsFolder Instance { get; private set; }
@@ -27,18 +25,20 @@ namespace CloseAllTabs
 
         private void Execute()
         {
-            if (!_options.DeleteTestResultsFolder)
+            if (!this._options.DeleteTestResultsFolder)
+            {
                 return;
+            }
 
             try
             {
-                string root = GetSolutionRootFolder(_dte.Solution);
-                string testResults = Path.Combine(root, "TestResults");
-                DeleteFiles(testResults);
+                var root = GetSolutionRootFolder(this._dte.Solution);
+                var testResults = Path.Combine(root, "TestResults");
+                this.DeleteFiles(testResults);
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.Write(ex);
+                Debug.Write(ex);
             }
         }
     }

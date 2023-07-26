@@ -1,8 +1,8 @@
-﻿using Microsoft.VisualStudio.Shell;
-using System.ComponentModel;
-
-namespace CloseAllTabs
+﻿namespace CloseAllTabs
 {
+    using System.ComponentModel;
+    using Microsoft.VisualStudio.Shell;
+
     public class Options : DialogPage
     {
         // General

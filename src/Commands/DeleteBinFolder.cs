@@ -1,18 +1,19 @@
-﻿using System;
-using System.IO;
-using EnvDTE80;
-using Microsoft.VisualStudio.Shell.Events;
-
-namespace CloseAllTabs
+﻿namespace CloseAllTabs
 {
+    using System;
+    using System.Diagnostics;
+    using System.IO;
+    using EnvDTE80;
+    using Microsoft.VisualStudio.Shell.Events;
+
     public class DeleteBinFolder : DeleteBase
     {
         private DeleteBinFolder(DTE2 dte, Options options)
         {
-            _dte = dte;
-            _options = options;
+            this._dte = dte;
+            this._options = options;
 
-            Microsoft.VisualStudio.Shell.Events.SolutionEvents.OnBeforeCloseSolution += (s, e) => Execute();
+            SolutionEvents.OnBeforeCloseSolution += (s, e) => this.Execute();
         }
 
         public static DeleteBinFolder Instance { get; private set; }
@@ -24,27 +25,31 @@ namespace CloseAllTabs
 
         private void Execute()
         {
-            if (!_options.DeleteBinFolder)
+            if (!this._options.DeleteBinFolder)
+            {
                 return;
+            }
 
             try
             {
-                foreach (EnvDTE.Project project in GetAllProjects())
+                foreach (var project in this.GetAllProjects())
                 {
-                    string root = GetProjectRootFolder(project);
+                    var root = GetProjectRootFolder(project);
 
                     if (root == null)
+                    {
                         return;
+                    }
 
-                    string bin = Path.Combine(root, "bin");
-                    string obj = Path.Combine(root, "obj");
+                    var bin = Path.Combine(root, "bin");
+                    var obj = Path.Combine(root, "obj");
 
-                    DeleteFiles(bin, obj);
+                    this.DeleteFiles(bin, obj);
                 }
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.Write(ex);
+                Debug.Write(ex);
             }
         }
     }
