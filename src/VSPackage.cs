@@ -32,6 +32,7 @@ namespace CloseAllTabs
             CollapseFolders.Initialize(dte, options);
             SolutionExplorerFocus.Initialize(dte, options);
             DeleteBinFolder.Initialize(dte, options);
+            DeleteObjFolder.Initialize(dte, options);
             DeleteTestResultsFolder.Initialize(dte, options);
             DeleteDotVsFolder.Initialize(dte, options);
             DeleteIisExpressLogsFolder.Initialize(dte, options);

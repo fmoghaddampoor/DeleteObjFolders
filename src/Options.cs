@@ -1,4 +1,5 @@
-﻿namespace CloseAllTabs
+﻿// ReSharper disable All
+namespace CloseAllTabs
 {
     using System.ComponentModel;
     using Microsoft.VisualStudio.Shell;
@@ -13,10 +14,16 @@
         public bool CloseDocuments { get; set; } = true;
 
         [Category("General")]
-        [DisplayName("Delete bin and obj folder")]
-        [Description("Deletes the bin and obj folders on close unless they are under source control")]
+        [DisplayName("Delete bin folder")]
+        [Description("Deletes the bin folders on close unless they are under source control")]
         [DefaultValue(false)]
         public bool DeleteBinFolder { get; set; }
+        
+        [Category("General")]
+        [DisplayName("Delete obj folder")]
+        [Description("Deletes the obj folders on close unless they are under source control")]
+        [DefaultValue(false)]
+        public bool DeleteObjFolder { get; set; }
 
         [Category("General")]
         [DisplayName("Delete TestResults folder")]
