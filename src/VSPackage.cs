@@ -5,6 +5,7 @@ namespace CloseAllTabs
     using System;
     using System.Runtime.InteropServices;
     using System.Threading;
+    using Commands;
     using EnvDTE;
     using EnvDTE80;
     using Microsoft.VisualStudio.Shell;
@@ -33,8 +34,8 @@ namespace CloseAllTabs
             DeleteBinFolder.Initialize(dte, options);
             DeleteTestResultsFolder.Initialize(dte, options);
             DeleteDotVsFolder.Initialize(dte, options);
-            DeleteIISExpressLogsFolder.Initialize(dte, options);
-            DeleteIISExpressTraceLogFilesFolder.Initialize(dte, options);
+            DeleteIisExpressLogsFolder.Initialize(dte, options);
+            DeleteIisExpressTraceLogFilesFolder.Initialize(dte, options);
         }
     }
 }

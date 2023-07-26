@@ -1,4 +1,5 @@
-﻿namespace CloseAllTabs
+﻿// ReSharper disable All
+namespace CloseAllTabs.Commands
 {
     using System;
     using System.Collections.Generic;
@@ -11,8 +12,8 @@
 
     public class DeleteBase
     {
-        protected DTE2 _dte;
-        protected Options _options;
+        protected DTE2 Dte;
+        protected Options Options;
 
         protected void DeleteFiles(params string[] folders)
         {
@@ -22,7 +23,7 @@
             {
                 var files = Directory.EnumerateFiles(folder, "*.*", SearchOption.AllDirectories);
 
-                if (!files.Any(f => f.EndsWith(".refresh") || this._dte.SourceControl.IsItemUnderSCC(f)))
+                if (!files.Any(f => f.EndsWith(".refresh") || this.Dte.SourceControl.IsItemUnderSCC(f)))
                 {
                     try
                     {
@@ -38,7 +39,7 @@
 
         protected IEnumerable<Project> GetAllProjects()
         {
-            return this._dte.Solution.Projects.Cast<Project>().SelectMany(GetChildProjects).Union(this._dte.Solution.Projects.Cast<Project>()).Where(
+            return this.Dte.Solution.Projects.Cast<Project>().SelectMany(GetChildProjects).Union(this.Dte.Solution.Projects.Cast<Project>()).Where(
                 p =>
                 {
                     try
@@ -129,13 +130,13 @@
             return null;
         }
 
-        public static string GetIISExpressLogsFolder()
+        public static string GetIisExpressLogsFolder()
         {
             var fullPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "IISExpress", "Logs");
             return Directory.Exists(fullPath) ? fullPath : null;
         }
 
-        public static string GetIISExpressTraceLogFilesFolder()
+        public static string GetIisExpressTraceLogFilesFolder()
         {
             var fullPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "IISExpress", "TraceLogFiles");
             return Directory.Exists(fullPath) ? fullPath : null;

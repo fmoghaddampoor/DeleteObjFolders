@@ -1,37 +1,38 @@
-﻿namespace CloseAllTabs
+﻿// ReSharper disable All
+namespace CloseAllTabs.Commands
 {
     using System;
     using System.Diagnostics;
     using EnvDTE80;
     using Microsoft.VisualStudio.Shell.Events;
 
-    public class DeleteIISExpressTraceLogFilesFolder : DeleteBase
+    public class DeleteIisExpressTraceLogFilesFolder : DeleteBase
     {
-        private DeleteIISExpressTraceLogFilesFolder(DTE2 dte, Options options)
+        private DeleteIisExpressTraceLogFilesFolder(DTE2 dte, Options options)
         {
-            this._dte = dte;
-            this._options = options;
+            this.Dte = dte;
+            this.Options = options;
 
             SolutionEvents.OnBeforeCloseSolution += (s, e) => this.Execute();
         }
 
-        public static DeleteIISExpressTraceLogFilesFolder Instance { get; private set; }
+        public static DeleteIisExpressTraceLogFilesFolder Instance { get; private set; }
 
         public static void Initialize(DTE2 dte, Options options)
         {
-            Instance = new DeleteIISExpressTraceLogFilesFolder(dte, options);
+            Instance = new DeleteIisExpressTraceLogFilesFolder(dte, options);
         }
 
         private void Execute()
         {
-            if (!this._options.DeleteIISExpressTraceLogFilesFolder)
+            if (!this.Options.DeleteIisExpressTraceLogFilesFolder)
             {
                 return;
             }
 
             try
             {
-                var root = GetIISExpressTraceLogFilesFolder();
+                var root = GetIisExpressTraceLogFilesFolder();
                 this.DeleteFiles(root);
             }
             catch (Exception ex)
