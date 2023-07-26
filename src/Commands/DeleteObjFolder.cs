@@ -1,4 +1,5 @@
-﻿namespace CloseAllTabs.Commands
+﻿// ReSharper disable All
+namespace CloseAllTabs.Commands
 {
     using System;
     using System.Diagnostics;
@@ -6,9 +7,9 @@
     using EnvDTE80;
     using Microsoft.VisualStudio.Shell.Events;
 
-    public class DeleteBinFolder : DeleteBase
+    public class DeleteObjFolder : DeleteBase
     {
-        private DeleteBinFolder(DTE2 dte, Options options)
+        private DeleteObjFolder(DTE2 dte, Options options)
         {
             this.Dte = dte;
             this.Options = options;
@@ -16,16 +17,16 @@
             SolutionEvents.OnBeforeCloseSolution += (s, e) => this.Execute();
         }
 
-        public static DeleteBinFolder Instance { get; private set; }
+        public static DeleteObjFolder Instance { get; private set; }
 
         public static void Initialize(DTE2 dte, Options options)
         {
-            Instance = new DeleteBinFolder(dte, options);
+            Instance = new DeleteObjFolder(dte, options);
         }
 
         private void Execute()
         {
-            if (!this.Options.DeleteBinFolder)
+            if (!this.Options.DeleteObjFolder)
             {
                 return;
             }
@@ -41,10 +42,10 @@
                         return;
                     }
 
-                    var bin = Path.Combine(root, "bin");
+                    var obj = Path.Combine(root, "obj");
 
 
-                    this.DeleteFiles(bin);
+                    this.DeleteFiles(obj);
                 }
             }
             catch (Exception ex)
