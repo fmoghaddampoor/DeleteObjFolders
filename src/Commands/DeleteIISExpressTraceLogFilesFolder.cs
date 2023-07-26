@@ -1,16 +1,18 @@
-﻿using EnvDTE80;
-using System;
-
-namespace CloseAllTabs
+﻿namespace CloseAllTabs
 {
+    using System;
+    using System.Diagnostics;
+    using EnvDTE80;
+    using Microsoft.VisualStudio.Shell.Events;
+
     public class DeleteIISExpressTraceLogFilesFolder : DeleteBase
     {
         private DeleteIISExpressTraceLogFilesFolder(DTE2 dte, Options options)
         {
-            _dte = dte;
-            _options = options;
+            this._dte = dte;
+            this._options = options;
 
-            Microsoft.VisualStudio.Shell.Events.SolutionEvents.OnBeforeCloseSolution += (s, e) => Execute();
+            SolutionEvents.OnBeforeCloseSolution += (s, e) => this.Execute();
         }
 
         public static DeleteIISExpressTraceLogFilesFolder Instance { get; private set; }
@@ -22,17 +24,19 @@ namespace CloseAllTabs
 
         private void Execute()
         {
-            if (!_options.DeleteIISExpressTraceLogFilesFolder)
+            if (!this._options.DeleteIISExpressTraceLogFilesFolder)
+            {
                 return;
+            }
 
             try
             {
-                string root = GetIISExpressTraceLogFilesFolder();
-                DeleteFiles(root);
+                var root = GetIISExpressTraceLogFilesFolder();
+                this.DeleteFiles(root);
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.Write(ex);
+                Debug.Write(ex);
             }
         }
     }
