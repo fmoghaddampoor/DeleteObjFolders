@@ -20,7 +20,8 @@ this extension will perform clean up.
 - Closes all open documents
 - Collapses nodes in Solution Explorer
 - Activates Solution Explorer
-- Delete *bin* and *obj* folders
+- Delete only *bin* folders
+- Delete only *obj* folders
 - Super fast - you won't even notice it
 
 ### Close open documents
